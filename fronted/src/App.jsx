@@ -10,6 +10,7 @@ import OnboardingPage from "./pages/OnboardingPage.jsx"
 import {Toaster} from "react-hot-toast"
 import PageLoader from './components/PageLoader.jsx'
 import useAuthUser from './hooks/useAuthUser.js'
+import Layout from './components/Layout.jsx'
 
 function App() {
    const {isLoading,authUser}=useAuthUser();
@@ -17,9 +18,9 @@ function App() {
    const isOnboarded=authUser?.user.isOnboarded
     if(isLoading) return <PageLoader/>;
   return (
-    <div className='h-screen' data-theme='night'>
+    <div className='h-screen' data-theme='forest'>
       <Routes>
-        <Route path='/' element={isAuthenticated && isOnboarded?(<HomePage/>):(
+        <Route path='/' element={isAuthenticated && isOnboarded?(<Layout showSidebar={true}><HomePage/></Layout>):(
           <Navigate to={!isAuthenticated ? "/login":"/onboarding"}/>
         )} />
           <Route

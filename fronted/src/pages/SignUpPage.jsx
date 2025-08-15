@@ -4,7 +4,7 @@ import {Link} from "react-router"
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axiosInstance } from '../lib/axios';
 import { signup } from '../lib/api';
-import i from "/iii.png"
+import i from "./iii.png"
 const SignUpPage = () => {
   const [signupData,setSignupData]=useState({
     fullName:"",
