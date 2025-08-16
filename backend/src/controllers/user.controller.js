@@ -8,7 +8,7 @@ export async function getRecommandedUsers(req, res) {
    
    
    
-    const recommandedUsers=await User.find(
+    const recommendedUsers=await User.find(
        {
            $and: [
                { _id: { $ne: userId } }, // Exclude current user
@@ -17,6 +17,7 @@ export async function getRecommandedUsers(req, res) {
            ]
        }
     )
+    res.status(200).json(recommendedUsers)
  } catch (error) {
     console.error("Error fetching recommended users:", error.message);
     return res.status(500).json({ message: "Internal server error" });
