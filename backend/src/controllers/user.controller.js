@@ -1,29 +1,41 @@
 import User from "../model/User.js";
 import FriendRequest from "../model/FriendRequest.js"
+
+
 export async function getRecommandedUsers(req, res) {
- try {
+  try {
     const userId = req.user._id;
     const currentUser = req.user;
-   
-   
-   
-   
-    const recommendedUsers=await User.find(
-       {
-           $and: [
-               { _id: { $ne: userId } }, // Exclude current user
-               { _id: { $nin: currentUser.friends } }, // Exclude friends
-               {isOnboarded: true} // Only include onboarded users
-           ]
-       }
-    )
-    res.status(200).json(recommendedUsers)
- } catch (error) {
+
+    // Find all pending requests involving the current user
+    const friendRequests = await FriendRequest.find({
+      $or: [{ sender: userId }, { recipient: userId }],
+      status: "pending",
+    });
+
+    // Collect all user IDs involved in requests (both sender & recipient)
+    const requestedUserIds = friendRequests.map(fr =>
+      fr.sender.toString() === userId.toString()
+        ? fr.recipient
+        : fr.sender
+    );
+
+    // Now query recommended users excluding:
+    // - yourself
+    // - existing friends
+    // - users involved in pending friend requests
+    const recommendedUsers = await User.find({
+      _id: { $nin: [userId, ...currentUser.friends, ...requestedUserIds] },
+      isOnboarded: true,
+    });
+
+    res.status(200).json(recommendedUsers);
+  } catch (error) {
     console.error("Error fetching recommended users:", error.message);
     return res.status(500).json({ message: "Internal server error" });
- }
-
+  }
 }
+
 export async function getMyFriends(req,res){
  try {
    const user=await User.findById(req.user._id).select("friends").populate("friends",
