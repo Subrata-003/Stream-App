@@ -47,6 +47,7 @@ export async function getMyFriends(req,res){
    res.status(500).json({message:"Internal server error"});
  }
 }
+
 export async function sendFriendRequest(req,res){
    try {
       const myId=req.user._id;

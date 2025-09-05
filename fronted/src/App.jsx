@@ -12,6 +12,7 @@ import PageLoader from './components/PageLoader.jsx'
 import useAuthUser from './hooks/useAuthUser.js'
 import Layout from './components/Layout.jsx'
 import { useThemeStore } from './store/useThemeStore.jsx'
+import Self from './pages/Self.jsx'
 
 function App() {
   const { theme } = useThemeStore()
@@ -74,6 +75,8 @@ function App() {
         <Route path="/onboarding" element={isAuthenticated ? (!isOnboarded ? (<OnboardingPage />) : (<Navigate to="/" />)) : (
           <Navigate to="/login" />
         )} />
+
+         <Route path="/self" element={<Self />} />
       </Routes>
       <Toaster />
 

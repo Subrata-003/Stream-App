@@ -116,7 +116,7 @@ const HomePage = () => {
 
 
                         <div>
-                          
+
                           <h3 className="font-semibold text-lg">{user.fullName}</h3>
                           {user.location && (
                             <div className="flex items-center text-xs opacity-70 mt-1">
@@ -143,9 +143,8 @@ const HomePage = () => {
 
                       {/* Action button */}
                       <button
-                        className={`btn w-full mt-2 ${
-                          hasRequestBeenSent ? "btn-disabled" : "btn-primary"
-                        } `}
+                        className={`btn w-full mt-2 ${hasRequestBeenSent ? "btn-disabled" : "btn-primary"
+                          } `}
                         onClick={() => sendRequestMutation(user._id)}
                         disabled={hasRequestBeenSent || isPending}
                       >
@@ -168,14 +167,18 @@ const HomePage = () => {
             </div>
           )}
         </section>
+        <div className="flex justify-center ">
+          <Link to="/self" className="border border-t-red-300 p-2 rounded-md">About The Creator</Link>
+        </div>
+
       </div>
-      
+
     </div>
-    
+
   );
-  
+
 };
 
 export default HomePage;
 
-const capitialize=(str)=>str.charAt(0).toUpperCase()+str.slice(1);
+const capitialize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
